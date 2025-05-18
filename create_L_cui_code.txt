@@ -1,0 +1,25 @@
+from pyaedt import Maxwell3d, settings
+
+# COM モード（gRPCではなく）を使用
+settings.use_grpc_api = False
+
+# Maxwell 3D (2021.2) のセッションを新規起動
+m3d = Maxwell3d(projectname="L_Electrode_ExplicitSheet", 
+                designname="L_Design", 
+                version="2021.2", 
+                new_desktop_session=True, 
+                non_graphical=False)
+
+m3d.modeler.model_units = "mm"
+thickness = 0.01  # Z方向への押し出し厚み [mm]
+
+# --- 1. L字型ポリラインの作成 ---
+points = [
+    [0.1, 0.4, 0.0],  # A
+    [0.4, 0.4, 0.0],  # B
+    [0.4, 0.1, 0.0],  # C
+    [0.3, 0.1, 0.0],  # D
+    [0.3, 0.3, 0.0],  # E
+    [0.1, 0.3, 0.0],  # F
+    [0.1, 0.4, 0.0]   # A（始点に戻る＝閉じる）
+]
